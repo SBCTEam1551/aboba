@@ -51,45 +51,71 @@
             box-sizing: border-box;
         }
         
-        /* iframe {
+         iframe {
             visibility: hidden;
             position: absolute;
-        } */
+        } 
         
         
         audio{
             width: 100px;
+        }
+
+        .hiddiv {
+            visibility: hidden;
+            position: absolute;
         }
     </style>
 </head>
 
 <body>
     <div id="dabdadb" value="<%= asd %>"></div>
-    <div id="myDIV">
-        <div class="example">
-
-            <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/cPzhNzqt9LA?enablejsapi=1&autoplay=1" allow="autoplay" title="YouTube video player" frameborder="0"></iframe>
-            
-
-        </div>
-    </div>
-    <audio src="http://89.185.85.154:1561/voice/819.ogg" id="audio" autoplay="autoplay"></audio>
-
-
+    <div id="myDIV" class = "hiddiv"><div class="example"></div></div>
+    <div id="myDV" class = "hiddiv"><div class="exaple"></div></div>
    
-    <button onclick="myFunction()">Try it</button>
+    <!-- -->
+
 
         <script>
+        let contablecuntrypopa = 0
         function myFunction() {
-        var x = document.getElementById("myDIV");
-        x.querySelector("div.example").innerHTML += "Hello World!";
+        
+            var x = document.getElementById("myDIV");
+            var myArray = x.querySelector("div.example").textContent.split(" | ")
+            
+            if(contablecuntrypopa < myArray.length-1){
+                
+
+            
+                if (isFinite(myArray[contablecuntrypopa])){
+                    console.log('array')
+                    var x = document.getElementById("myDV");
+                    x.querySelector(".exaple").innerHTML = ''
+                    aksjdh = `http://89.185.85.154:1561/voice/${myArray[contablecuntrypopa]}.ogg`
+                    x.querySelector(".exaple").innerHTML += `<audio src="${aksjdh}" id="audio" autoplay="autoplay"></audio>`;
+                    
+
+                } else{
+                    console.log('not array')
+                    var x = document.getElementById("myDV");
+                    x.querySelector(".exaple").innerHTML = ''
+                    aksjdh = `https://www.youtube.com/embed/${myArray[contablecuntrypopa]}?enablejsapi=1&autoplay=1`
+                    x.querySelector(".exaple").innerHTML += `<iframe id="video" width="560" height="315" src='${aksjdh}' allow="autoplay" title="YouTube video player" frameborder="0"></iframe>`;
+                    
+
+                }
+                contablecuntrypopa = contablecuntrypopa + 1
+                console.log(contablecuntrypopa) 
+            }
+            
         }
+        
         </script>
     
     
     
-    <button id="btnplay" onclick="play()">Click me!!!</button>
-    <button id="btnstop" onclick="stop()">Don't click me!!!</button>
+    <button id="btnplay" onclick="myFunction(), time()">Click me!!!</button>
+    <!-- <button id="btnstop" onclick="stop()">Don't click me!!!</button> -->
     <div class="clock">
         <div id="h" class="time">00</div>
         <span class="time">:</span>
@@ -107,7 +133,7 @@
         /*разбивка массива*/
         function valueOfVidAud() {
             var cookieValue = document.getElementById('dabdadb').getAttribute('value');
-            alert(cookieValue)
+            
             cookieValue = cookieValue.split(",");
             for(i=0; i<6; i++) {
                 cookieValue[i] = cookieValue[i].split(" || ");
@@ -131,16 +157,33 @@
         const h = document.getElementById("h")
         const m = document.getElementById("m")
         const s = document.getElementById("s")
-        
-            let dateToday = new Date();
-            let hr = "08";
-            let min = "30";
-            let sec = "00";
-           
-            h.textContent = hr;
-            m.textContent = min;
-            s.textContent = sec;
-       
+
+        var hr = 8
+        var mi = 30
+        var se = 00
+
+        function time() {
+            hr += 1
+            mi = mi + 45
+            if (mi > 60) {
+                mi -= 60
+
+            }
+            if (mi % 2 != 0) {
+                mi += 10
+
+            }
+            if (mi > 60) {
+                mi -= 60
+
+            }
+            if (hr > 24) {
+                hr = 0
+            }
+            h.textContent = hr
+            m.textContent = mi
+
+        }
         var player;
 
         // this function gets called when API is ready to use
