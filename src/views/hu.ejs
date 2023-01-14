@@ -1,0 +1,187 @@
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,500&display=swap');
+        body {
+            background-image: url("https://www.design4school.ru/storage/app/media/portfolio/712/new/hello.jpg");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-image: fill;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        button {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: bisque;
+            color: purple;
+            padding: 15px;
+            border-radius: 30px;
+            border: 0;
+            display: flex;
+            justify-content: center;
+            margin-right: 20px;
+        }
+        
+        .clock {
+            display: flex;
+            padding: 15px;
+            border-width: 4px;
+            border-color: black;
+            border-radius: 30px;
+            background-color: darkblue;
+            width: 132px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .time {
+            color: white;
+            font-size: 35px;
+            font-family: 'Roboto', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        /* iframe {
+            visibility: hidden;
+            position: absolute;
+        } */
+        
+        
+        audio{
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dabdadb" value="<%= asd %>"></div>
+    <div id="myDIV">
+        <div class="example">
+
+            <iframe id="video" width="560" height="315" src="https://www.youtube.com/embed/cPzhNzqt9LA?enablejsapi=1&autoplay=1" allow="autoplay" title="YouTube video player" frameborder="0"></iframe>
+            
+
+        </div>
+    </div>
+    <audio src="http://89.185.85.154:1561/voice/819.ogg" id="audio" autoplay="autoplay"></audio>
+
+
+   
+    <button onclick="myFunction()">Try it</button>
+
+        <script>
+        function myFunction() {
+        var x = document.getElementById("myDIV");
+        x.querySelector("div.example").innerHTML += "Hello World!";
+        }
+        </script>
+    
+    
+    
+    <button id="btnplay" onclick="play()">Click me!!!</button>
+    <button id="btnstop" onclick="stop()">Don't click me!!!</button>
+    <div class="clock">
+        <div id="h" class="time">00</div>
+        <span class="time">:</span>
+        <div id="m" class="time">00</div>
+        <span class="time">:</span>
+        <div id="s" class="time">00</div>
+    </div>
+
+
+    <script>
+
+        
+       
+
+        /*разбивка массива*/
+        function valueOfVidAud() {
+            var cookieValue = document.getElementById('dabdadb').getAttribute('value');
+            alert(cookieValue)
+            cookieValue = cookieValue.split(",");
+            for(i=0; i<6; i++) {
+                cookieValue[i] = cookieValue[i].split(" || ");
+                if (!cookieValue[i][1]){
+
+                }
+                else {
+                    for(b = 1; b<cookieValue[i].length; b++){
+                        var x = document.getElementById("myDIV");
+                        console.log(`${i} ${b}`)
+                        x.querySelector(".example").innerHTML += `${cookieValue[i][b]} | `;
+                    }
+                }
+                
+                
+
+            }    
+        }
+        valueOfVidAud()
+
+        const h = document.getElementById("h")
+        const m = document.getElementById("m")
+        const s = document.getElementById("s")
+        
+            let dateToday = new Date();
+            let hr = "08";
+            let min = "30";
+            let sec = "00";
+           
+            h.textContent = hr;
+            m.textContent = min;
+            s.textContent = sec;
+       
+        var player;
+
+        // this function gets called when API is ready to use
+        function onYouTubePlayerAPIReady() {
+            // create the global player from the specific iframe (#video)
+            player = new YT.Player("video", {
+                events: {
+                    // call this function when player is ready to use
+                    onReady: onPlayerReady
+                }
+            });
+        }
+
+        function play() {
+            let start = document.getElementById("audio");
+            audio.play();
+        }
+       
+        
+
+        function onPlayerReady(event) {
+            // bind events
+            var playButton = document.getElementById("btnplay");
+            playButton.addEventListener("click", function() {
+                player.playVideo();
+            });
+        }
+        // Inject YouTube API script
+        var tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/player_api";
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function stop() {
+
+            var playButton = document.getElementById("btnstop");
+            playButton.addEventListener("click", function() {
+                player.pauseVideo();
+            });
+        }
+    </script>
+</body>
+
+</html>
